@@ -7,27 +7,31 @@ import Booking from '@/models/Booking'
 
 export async function GET(request: NextRequest) {
   try {
-    const session = await getServerSession()
-    if (!session?.user) {
-      return NextResponse.json(
-        { message: 'Unauthorized' },
-        { status: 401 }
-      )
-    }
-
     await connectDB()
 
     const { searchParams } = new URL(request.url)
     const owner = searchParams.get('owner')
     const stats = searchParams.get('stats')
 
-    // Get user data
-    const user = await User.findOne({ email: session.user.email })
-    if (!user) {
-      return NextResponse.json(
-        { message: 'User not found' },
-        { status: 404 }
-      )
+    // Only require session for stats or owner queries
+    let session = null
+    let user = null
+    if (stats === 'true' || owner === 'true') {
+      session = await getServerSession()
+      if (!session?.user) {
+        return NextResponse.json(
+          { message: 'Unauthorized' },
+          { status: 401 }
+        )
+      }
+      // Get user data
+      user = await User.findOne({ email: session.user.email })
+      if (!user) {
+        return NextResponse.json(
+          { message: 'User not found' },
+          { status: 404 }
+        )
+      }
     }
 
     // If requesting stats, return dashboard statistics
@@ -113,7 +117,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json(transformedProperties)
     }
 
-    // Get all properties with filters
+    // Get all properties with filters (public, no auth required)
     const type = searchParams.get('type')
     const minPrice = searchParams.get('minPrice')
     const maxPrice = searchParams.get('maxPrice')
