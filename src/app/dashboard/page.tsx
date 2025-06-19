@@ -55,7 +55,9 @@ export default function DashboardPage() {
     totalFavorites: 0,
     monthlyRevenue: 0,
     savedProperties: 0,
-    recentViews: 0
+    recentViews: 0,
+    pendingBookings: 0,
+    totalBookings: 0,
   })
 
   useEffect(() => {
@@ -112,7 +114,9 @@ export default function DashboardPage() {
           totalFavorites: 0,
           monthlyRevenue,
           savedProperties: 0,
-          recentViews: 0
+          recentViews: 0,
+          pendingBookings: 0,
+          totalBookings: 0,
         })
       }
     } catch (error) {
@@ -136,7 +140,9 @@ export default function DashboardPage() {
           totalFavorites: favoritesData.length,
           monthlyRevenue: 0,
           savedProperties: favoritesData.length,
-          recentViews: 0
+          recentViews: 0,
+          pendingBookings: 0,
+          totalBookings: 0,
         })
       }
     } catch (error) {

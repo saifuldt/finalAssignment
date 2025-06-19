@@ -21,17 +21,17 @@ export default function PropertyDetailPage() {
   const [showBookingForm, setShowBookingForm] = useState(false)
 
   useEffect(() => {
-    if (params.id) {
+    if (params && params.id) {
       fetchProperty()
     }
     if (session?.user) {
       fetchUserData()
     }
-  }, [params.id, session])
+  }, [params, session])
 
   const fetchProperty = async () => {
     try {
-      const response = await fetch(`/api/properties/${params.id}`)
+      const response = await fetch(`/api/properties/${params && params.id}`)
       if (!response.ok) {
         throw new Error('Property not found')
       }

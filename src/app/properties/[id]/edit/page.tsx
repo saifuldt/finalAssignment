@@ -17,12 +17,12 @@ export default function EditPropertyPage() {
   const [checkingAccess, setCheckingAccess] = useState(true)
 
   useEffect(() => {
-    if (status === 'authenticated' && params.id) {
+    if (status === 'authenticated' && params && params.id) {
       fetchUserAndPropertyData()
     } else if (status === 'unauthenticated') {
       setCheckingAccess(false)
     }
-  }, [status, params.id])
+  }, [status, params])
 
   const fetchUserAndPropertyData = async () => {
     try {
@@ -35,7 +35,7 @@ export default function EditPropertyPage() {
       setUser(userData)
 
       // Fetch property data
-      const propertyResponse = await fetch(`/api/properties/${params.id}`)
+      const propertyResponse = await fetch(`/api/properties/${params && params.id}`)
       if (!propertyResponse.ok) {
         throw new Error('Property not found')
       }
@@ -103,7 +103,7 @@ export default function EditPropertyPage() {
   const handleSubmit = async (propertyData: Partial<Property>) => {
     setLoading(true)
     try {
-      const response = await fetch(`/api/properties/${params.id}`, {
+      const response = await fetch(`/api/properties/${params && params.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
