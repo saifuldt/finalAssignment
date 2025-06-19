@@ -8,12 +8,12 @@ export default function PropertyFilters() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [filters, setFilters] = useState({
-    search: searchParams.get('search') || '',
-    type: searchParams.get('type') || '',
-    minPrice: searchParams.get('minPrice') || '',
-    maxPrice: searchParams.get('maxPrice') || '',
-    bedrooms: searchParams.get('bedrooms') || '',
-    city: searchParams.get('city') || '',
+    search: searchParams?.get('search') || '',
+    type: searchParams?.get('type') || '',
+    minPrice: searchParams?.get('minPrice') || '',
+    maxPrice: searchParams?.get('maxPrice') || '',
+    bedrooms: searchParams?.get('bedrooms') || '',
+    city: searchParams?.get('city') || '',
   })
 
   useEffect(() => {

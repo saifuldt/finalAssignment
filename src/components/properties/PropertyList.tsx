@@ -45,7 +45,7 @@ export default function PropertyList() {
 
   async function fetchProperties() {
     try {
-      const queryString = searchParams.toString()
+      const queryString = searchParams?.toString() || ''
       const response = await fetch(`/api/properties?${queryString}`)
       const data = await response.json()
       setProperties(data.properties)
