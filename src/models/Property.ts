@@ -93,6 +93,14 @@ const propertySchema = new mongoose.Schema({
       type: Date,
       default: Date.now,
     },
+    isRead: {
+      type: Boolean,
+      default: false,
+    },
+    isDelivered: {
+      type: Boolean,
+      default: true,
+    },
   }],
   createdAt: {
     type: Date,

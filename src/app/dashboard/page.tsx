@@ -24,6 +24,7 @@ import {
   CheckIcon,
   XMarkIcon
 } from '@heroicons/react/24/outline'
+import MessagesDashboard from '@/components/MessagesDashboard'
 
 interface DashboardStats {
   totalProperties: number
@@ -709,23 +710,7 @@ export default function DashboardPage() {
 
         {/* Messages Tab */}
         {activeTab === 'messages' && (
-          <div>
-            <h3 className="text-lg font-semibold mb-6">Messages</h3>
-            
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-              <div className="text-center py-8">
-                <ChatBubbleLeftIcon className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Messages Feature</h3>
-                <p className="text-gray-600 mb-6">
-                  {isLandlord 
-                    ? 'View and respond to messages from potential tenants about your properties.'
-                    : 'View messages from landlords about your property inquiries and bookings.'
-                  }
-                </p>
-                <p className="text-gray-500 text-sm">Messages functionality will be available soon!</p>
-              </div>
-            </div>
-          </div>
+          <MessagesDashboard isLandlord={isLandlord} />
         )}
 
         {/* Favorites Tab */}

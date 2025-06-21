@@ -36,6 +36,8 @@ export async function GET(
       _id: msg._id,
       message: msg.message,
       createdAt: msg.createdAt,
+      isRead: msg.isRead || false,
+      isDelivered: msg.isDelivered !== false, // Default to true
       sender: msg.sender ? {
         _id: msg.sender._id,
         name: msg.sender.name,
@@ -112,6 +114,8 @@ export async function POST(
       sender: user._id,
       message: message.trim(),
       createdAt: new Date(),
+      isRead: false,
+      isDelivered: true,
     })
 
     await property.save()

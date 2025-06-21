@@ -4,6 +4,7 @@ import './globals.css'
 import { Toaster } from 'react-hot-toast'
 import AuthProvider from '@/components/providers/AuthProvider'
 import Navbar from '@/components/layout/Navbar'
+import MessageNotification from '@/components/MessageNotification'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 
@@ -23,6 +24,7 @@ export default function RootLayout({
         <AuthProvider>
           <Navbar />
           {children}
+          <MessageNotification />
           <Toaster position="bottom-right" />
         </AuthProvider>
       </body>

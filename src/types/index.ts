@@ -30,6 +30,8 @@ export interface Message {
   sender: string | User
   message: string
   createdAt: Date
+  isRead?: boolean
+  isDelivered?: boolean
 }
 
 export interface User {

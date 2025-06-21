@@ -9,6 +9,7 @@ import { HeartIcon, PencilIcon, TrashIcon, CalendarIcon } from '@heroicons/react
 import { HeartIcon as HeartIconSolid } from '@heroicons/react/24/solid'
 import Link from 'next/link'
 import BookingForm from '@/components/BookingForm'
+import MessageSystem from '@/components/MessageSystem'
 
 export default function PropertyDetailPage() {
   const params = useParams()
@@ -135,7 +136,11 @@ export default function PropertyDetailPage() {
     )
   }
 
-  const isOwner = session?.user?.email && property.owner === session.user.email
+  const isOwner = Boolean(session?.user?.email && (
+    typeof property.owner === 'string' 
+      ? property.owner === session.user.email
+      : property.owner.email === session.user.email
+  ))
   const isLandlord = user?.role === 'landlord'
 
   return (
@@ -255,13 +260,13 @@ export default function PropertyDetailPage() {
               </div>
 
               {/* Contact Form or Booking Form */}
-              <div className="lg:col-span-1">
+              <div className="lg:col-span-1 ">
                 {isOwner ? (
-                  <div className="bg-gray-50 p-6 rounded-lg">
-                    <h2 className="text-xl font-semibold mb-4">Property Management</h2>
-                    <div className="space-y-4">
+                  <div className="bg-gray-50 p-8 rounded-lg">
+                    <h2 className="text-xl font-semibold pb-4">Property Management</h2>
+                    <div className="flex flex-col gap-2">
                       <p className="text-gray-600">You own this property. Manage it from your dashboard.</p>
-                      <Link href="/dashboard" className="btn-primary w-full text-center">
+                      <Link href="/dashboard" className="btn-primary w-full text-center mt-4">
                         Go to Dashboard
                       </Link>
                     </div>
@@ -322,6 +327,15 @@ export default function PropertyDetailPage() {
           </div>
         </div>
       </div>
+      
+      {/* Active Message System */}
+      {session?.user && property?._id && (
+        <MessageSystem
+          propertyId={property._id}
+          propertyTitle={property.title}
+          isOwner={isOwner}
+        />
+      )}
     </div>
   )
 } 

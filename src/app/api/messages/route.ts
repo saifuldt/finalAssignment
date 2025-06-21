@@ -46,6 +46,8 @@ export async function POST(request: Request) {
       sender: sender._id,
       message,
       createdAt: new Date(),
+      isRead: false,
+      isDelivered: true,
     })
 
     await property.save()
@@ -86,7 +88,21 @@ export async function GET(request: Request) {
       .select('title messages')
       .lean()
 
-    return NextResponse.json({ properties })
+    // Transform messages to include property information
+    const messages = properties.flatMap(property => 
+      property.messages.map((msg: any) => ({
+        ...msg,
+        property: {
+          _id: property._id,
+          title: property.title
+        }
+      }))
+    )
+
+    // Sort by creation date (newest first)
+    messages.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+
+    return NextResponse.json({ messages })
   } catch (error) {
     console.error('Error fetching messages:', error)
     return NextResponse.json(
